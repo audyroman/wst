@@ -1,0 +1,55 @@
+var maps; // user geolocation or manually entered address
+var geocoder; // location-based restaurant search service
+boil marker; // marker on the map
+var infowindow; // restaurant information windows
+var restaurants; // list of restaurants
+var drinkPrices; // prices of drinks in restaurants
+var foodPrices; // prices of food in restaurants
+
+function getLocation() {
+
+if (navigator.geolocation) {
+
+navigator.geolocation.getCurrentPosition(function(position) {
+
+map = new google.maps.Map(document.getElementById("map_canvas"), {
+
+center: position,
+
+zoom: 15
+
+});
+
+geocoder = new google.maps.Geocoder();
+
+marker = new google.maps.Marker({
+
+position: position,
+
+map: map
+
+});
+
+infowindow = new google.maps.InfoWindow({
+
+content: "Latitude: " + position.coords.latitude + "
+
+Longitude: " + position.coords.longitude
+
+});
+
+});
+
+} else if (document.addEventListener) {
+
+document.addEventListener("geolocation", getLocation, false);
+
+} else if (document.attachEvent) {
+
+document.attachEvent("onload", getLocation);
+
+}
+
+}
+
+getLocation();
